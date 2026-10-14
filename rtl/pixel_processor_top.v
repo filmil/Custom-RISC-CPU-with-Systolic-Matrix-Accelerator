@@ -1,6 +1,14 @@
-module pixel_processor_top (
-    input clk,
-    input rst
+module pixel_processor_top #(
+    parameter ROM_FILE = "",
+    parameter RAM_FILE = ""
+) (
+    input  wire        clk,
+    input  wire        rst,
+    output wire        cpu_stall,
+    output wire [31:0] pc,
+    output wire [31:0] mem_addr,
+    output wire [31:0] mem_write_data,
+    output wire        mem_write
 );
 
     // ==========================================
@@ -33,7 +41,9 @@ module pixel_processor_top (
     // ==========================================
     // 1. INSTRUCTION MEMORY (ROM)
     // ==========================================
-    instruction_memory my_rom (
+    instruction_memory #(
+        .MEM_FILE(ROM_FILE)
+    ) my_rom (
         .pc          (pc_wire),
         .instruction (instruction_wire)
     );
@@ -41,7 +51,9 @@ module pixel_processor_top (
     // ==========================================
     // 2. DATA MEMORY (RAM)
     // ==========================================
-    data_memory my_ram (
+    data_memory #(
+        .MEM_FILE(RAM_FILE)
+    ) my_ram (
         .clk         (clk),
         .mem_write   (mem_write_wire),
         .mem_read    (mem_read_wire),
@@ -94,5 +106,11 @@ module pixel_processor_top (
         .cpu_data_out    (copro_data_out_wire),
         .cpu_stall       (cpu_stall_wire)
     );
+
+    assign cpu_stall      = cpu_stall_wire;
+    assign pc             = pc_wire;
+    assign mem_addr       = mem_addr_wire;
+    assign mem_write_data = mem_write_data_wire;
+    assign mem_write      = mem_write_wire;
 
 endmodule

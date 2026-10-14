@@ -1,4 +1,6 @@
-module instruction_memory (
+module instruction_memory #(
+    parameter MEM_FILE = ""
+) (
     input  [31:0] pc,
     output [31:0] instruction
 );
@@ -6,10 +8,14 @@ module instruction_memory (
     // Create a memory array: 256 lines deep, 32 bits wide per line
     reg [31:0] rom [0:255];
 
+    integer i;
     initial begin
-        // Loads your compiled assembly code into the ROM at power-up
-       $readmemh("/home/mathew/Pixel_Processor_SystolicArray/program.hex", rom); 
-// (Update this path to wherever the file actually lives)
+        for (i = 0; i < 256; i = i + 1) begin
+            rom[i] = 32'h00000013; // NOP (addi x0, x0, 0)
+        end
+        if (MEM_FILE != "") begin
+            $readmemh(MEM_FILE, rom);
+        end
     end
 
     // Combinational Read: Grab the instruction at the current PC address.

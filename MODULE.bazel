@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: Apache-2.0
+module(
+    name = "custom_risc_cpu_systolic_accelerator",
+    version = "0.0.0",
+    bazel_compatibility = [">=9.0.0"],
+)
+
+bazel_dep(name = "rules_openxc7", version = "0.2.0")
+git_override(
+    module_name = "rules_openxc7",
+    remote = "https://github.com/filmil/bazel_rules_openxc7.git",
+    commit = "56dd661f751e52479983cdd4ced39a55e1303dea",
+)

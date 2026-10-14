@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: Apache-2.0
+
+package(default_visibility = ["//visibility:public"])
+
+alias(
+    name = "top_project",
+    actual = "//fpga/arty_a7_100t:top_project",
+)
+
+alias(
+    name = "top_synth",
+    actual = "//fpga/arty_a7_100t:top_synth",
+)
+
+alias(
+    name = "top_pnr",
+    actual = "//fpga/arty_a7_100t:top_pnr",
+)
+
+alias(
+    name = "top_prog",
+    actual = "//fpga/arty_a7_100t:top_prog",
+)

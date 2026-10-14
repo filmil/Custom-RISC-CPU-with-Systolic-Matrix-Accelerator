@@ -1,6 +1,11 @@
 module pixel_processor_top (
-    input clk,
-    input rst
+    input  wire        clk,
+    input  wire        rst,
+    output wire        cpu_stall,
+    output wire [31:0] pc,
+    output wire [31:0] mem_addr,
+    output wire [31:0] mem_write_data,
+    output wire        mem_write
 );
 
     // ==========================================
@@ -94,5 +99,11 @@ module pixel_processor_top (
         .cpu_data_out    (copro_data_out_wire),
         .cpu_stall       (cpu_stall_wire)
     );
+
+    assign cpu_stall      = cpu_stall_wire;
+    assign pc             = pc_wire;
+    assign mem_addr       = mem_addr_wire;
+    assign mem_write_data = mem_write_data_wire;
+    assign mem_write      = mem_write_wire;
 
 endmodule

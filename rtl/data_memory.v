@@ -14,9 +14,11 @@ module data_memory (
     // Create a memory array: 256 lines deep, 32 bits wide per line
     reg [31:0] ram [0:1023];
 
-   initial begin
-        // Pre-load the RAM with Matrix A and Matrix B
-        $readmemh("/home/mathew/Pixel_Processor_SystolicArray/image_data2.hex", ram);
+    integer i;
+    initial begin
+        for (i = 0; i < 1024; i = i + 1) begin
+            ram[i] = 32'd0;
+        end
     end
 
     // 1. Synchronous Write

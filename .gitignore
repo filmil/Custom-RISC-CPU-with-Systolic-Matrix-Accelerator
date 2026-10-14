@@ -8,3 +8,6 @@ xsim.dir/
 .Xil/
 *.str
 *.dmp
+
+# Bazel
+/bazel-*

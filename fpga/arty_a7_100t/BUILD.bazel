@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: Apache-2.0
+
+load(
+    "@rules_openxc7//openxc7:defs.bzl",
+    "vivado_place_and_route",
+    "vivado_program_device",
+    "vivado_project",
+    "vivado_synthesis",
+)
+
+package(default_visibility = ["//visibility:public"])
+
+vivado_project(
+    name = "top_project",
+    srcs = [
+        "arty_top.v",
+        "//rtl:sources",
+    ],
+    part = "xc7a100tcsg324-1",
+    top_level = "arty_top",
+    xdcs = ["arty_a7_100t.xdc"],
+)
+
+vivado_synthesis(
+    name = "top_synth",
+    project = ":top_project",
+)
+
+vivado_place_and_route(
+    name = "top_pnr",
+    synthesis = ":top_synth",
+)
+
+vivado_program_device(
+    name = "top_prog",
+    deps = [":top_pnr"],
+)

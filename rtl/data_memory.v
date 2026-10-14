@@ -1,4 +1,6 @@
-module data_memory (
+module data_memory #(
+    parameter MEM_FILE = ""
+) (
     input         clk,
     
     // Control signals from CPU Control Unit
@@ -18,6 +20,9 @@ module data_memory (
     initial begin
         for (i = 0; i < 1024; i = i + 1) begin
             ram[i] = 32'd0;
+        end
+        if (MEM_FILE != "") begin
+            $readmemh(MEM_FILE, ram);
         end
     end
 

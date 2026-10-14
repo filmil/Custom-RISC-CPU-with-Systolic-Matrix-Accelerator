@@ -52,7 +52,7 @@ module tb_processor();
         $display("========================================");
         $display("          SIMULATION COMPLETE           ");
         $display("========================================");
-        $writememh("/home/mathew/Pixel_Processor_SystolicArray/output_data.hex", uut.my_ram.ram, 0, 1023);
+        $writememh("output_data.hex", uut.my_ram.ram, 0, 1023);
         $finish;
     end
 

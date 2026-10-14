@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
-module arty_top (
+module arty_top #(
+    parameter ROM_FILE = "",
+    parameter RAM_FILE = ""
+) (
     input  wire       CLK100MHZ,
     input  wire       ck_rst,
     output wire [3:0] led
@@ -13,7 +16,10 @@ module arty_top (
     wire [31:0] mem_write_data;
     wire        mem_write;
 
-    pixel_processor_top u_proc (
+    pixel_processor_top #(
+        .ROM_FILE(ROM_FILE),
+        .RAM_FILE(RAM_FILE)
+    ) u_proc (
         .clk            (CLK100MHZ),
         .rst            (rst),
         .cpu_stall      (cpu_stall),

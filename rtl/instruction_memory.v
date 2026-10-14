@@ -1,4 +1,6 @@
-module instruction_memory (
+module instruction_memory #(
+    parameter MEM_FILE = ""
+) (
     input  [31:0] pc,
     output [31:0] instruction
 );
@@ -10,6 +12,9 @@ module instruction_memory (
     initial begin
         for (i = 0; i < 256; i = i + 1) begin
             rom[i] = 32'h00000013; // NOP (addi x0, x0, 0)
+        end
+        if (MEM_FILE != "") begin
+            $readmemh(MEM_FILE, rom);
         end
     end
 
